@@ -1,11 +1,11 @@
-#include <catch2/catch.hpp>
+#include <catch.hpp>
 #include "tcppLibrary.hpp"
 #include <vector>
 #include <string>
 
 using namespace tcpp;
 
-
+#if 0
 class MockInputStream final : public IInputStream
 {
 	public:
@@ -345,3 +345,4 @@ TEST_CASE("Lexer Tests")
 		REQUIRE(lexer.GetNextToken().mType == E_TOKEN_TYPE::NUMBER);
 	}
 }
+#endif

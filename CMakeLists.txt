@@ -2,10 +2,6 @@ cmake_minimum_required (VERSION 3.8)
 
 project (tcpp)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/$<CONFIGURATION>")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/$<CONFIGURATION>")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/$<CONFIGURATION>")
-
 # Global variables are declared here
 set(TCPP_TESTS_NAME "tests")
 
@@ -16,8 +12,9 @@ option(IS_TESTING_ENABLED "The option turns on/off tests" ON)
 
 if (IS_TESTING_ENABLED)
 	enable_testing()
-endif ()
-
-if (IS_TESTING_ENABLED)
 	add_subdirectory(tests)
 endif ()
+
+add_executable(play play.cpp)
+target_include_directories(play PUBLIC ./source)
+set_property(TARGET play PROPERTY CXX_STANDARD 20)

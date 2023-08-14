@@ -21,17 +21,14 @@ endif ()
 # attach tcpp
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../source")
 
-# include Catch2
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/lib/Catch2/contrib/")
-add_subdirectory(lib/Catch2)
-
 set(HEADERS )
 
 set(SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/coreTests.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/lexerTests.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/stringInputStreamTests.cpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
+	"${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/ext/catch.cpp")
 
 source_group("includes" FILES ${HEADERS})
 source_group("sources" FILES ${SOURCES})
@@ -68,9 +65,8 @@ if (UNIX)
 endif (UNIX)
 
 add_executable(${TCPP_TESTS_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${TCPP_TESTS_NAME} Catch2::Catch2)
+target_include_directories(${TCPP_TESTS_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/ext/)
 
 include(CTest)
-include(Catch)
-
-catch_discover_tests(${TCPP_TESTS_NAME})
+add_test(NAME Tests
+         COMMAND ${TCPP_TESTS_NAME})
